@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FASHION MBTI — 나의 패션 유형 찾기</title>
+<meta property="og:title" content="FASHION MBTI">
+<meta property="og:description" content="12개의 질문으로 알아보는 나의 패션 유형과 어울리는 브랜드">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111;
+  --paper:#faf9f7;
+  --line:#dcdad5;
+  --muted:#8a877f;
+  --accent:#1a1a1a;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans KR',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  letter-spacing:-0.01em;
+}
+.serif{font-family:'Noto Serif KR',serif}
+.wrap{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 24px}
+.screen{display:none;flex:1;flex-direction:column}
+.screen.active{display:flex;animation:fadein .45s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- header ---------- */
+header{
+  padding:20px 0 16px;
+  border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+header .logo{font-family:'Noto Serif KR',serif;font-weight:700;font-size:15px;letter-spacing:.14em}
+header .sub{font-size:10px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+
+/* ---------- intro ---------- */
+#intro{justify-content:space-between;padding-bottom:40px}
+.intro-top{padding-top:12vh}
+.kicker{font-size:11px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:20px}
+.intro-title{font-family:'Noto Serif KR',serif;font-weight:600;font-size:40px;line-height:1.25;margin-bottom:24px}
+.intro-title em{font-style:italic;font-weight:400}
+.intro-desc{font-size:14px;color:#444;font-weight:300;margin-bottom:8px}
+.intro-meta{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;display:flex;gap:32px}
+.intro-meta div{font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.intro-meta strong{display:block;font-family:'Noto Serif KR',serif;font-size:20px;color:var(--ink);font-weight:600;letter-spacing:0}
+.btn{
+  display:block;width:100%;
+  background:var(--ink);color:var(--paper);
+  border:none;cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;font-weight:500;letter-spacing:.18em;
+  padding:18px 0;text-align:center;
+  transition:opacity .2s;
+}
+.btn:active{opacity:.75}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+
+/* ---------- quiz ---------- */
+#quiz{padding-bottom:40px}
+.progress-track{height:2px;background:var(--line);margin-top:0}
+.progress-bar{height:100%;background:var(--ink);width:0%;transition:width .35s ease}
+.qnum{font-family:'Noto Serif KR',serif;font-size:13px;letter-spacing:.12em;color:var(--muted);padding:36px 0 14px}
+.qnum b{color:var(--ink);font-size:15px}
+.qtext{font-family:'Noto Serif KR',serif;font-weight:600;font-size:24px;line-height:1.45;min-height:120px;margin-bottom:36px}
+.opts{display:flex;flex-direction:column;gap:14px}
+.opt{
+  border:1px solid var(--line);background:#fff;
+  text-align:left;padding:20px 18px;cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:400;line-height:1.5;color:var(--ink);
+  display:flex;gap:14px;align-items:flex-start;
+  transition:border-color .15s,background .15s;
+}
+.opt .mark{font-family:'Noto Serif KR',serif;font-style:italic;font-size:14px;color:var(--muted);padding-top:1px}
+.opt:active{border-color:var(--ink);background:#f1efeb}
+.backlink{margin-top:auto;padding-top:28px;background:none;border:none;font-size:12px;letter-spacing:.14em;color:var(--muted);cursor:pointer;text-align:left;font-family:'Noto Sans KR',sans-serif}
+
+/* ---------- result ---------- */
+#result{padding-bottom:48px}
+.r-card{border:1px solid var(--ink);background:#fff;padding:36px 26px 30px;margin-top:28px;position:relative}
+.r-card .corner{position:absolute;top:10px;right:14px;font-size:10px;letter-spacing:.2em;color:var(--muted)}
+.r-kicker{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.r-code{font-family:'Noto Serif KR',serif;font-weight:700;font-size:56px;letter-spacing:.06em;line-height:1;margin-bottom:10px}
+.r-name{font-family:'Noto Serif KR',serif;font-weight:600;font-size:22px;margin-bottom:4px}
+.r-tag{font-size:13px;font-style:italic;font-family:'Noto Serif KR',serif;color:var(--muted);margin-bottom:22px}
+.r-desc{font-size:14px;font-weight:300;color:#333;border-top:1px solid var(--line);padding-top:20px}
+.axes{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.axis .labels{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+.axis .labels .on{color:var(--ink);font-weight:700}
+.axis .track{height:4px;background:var(--line);position:relative}
+.axis .fill{position:absolute;top:0;height:100%;background:var(--ink)}
+.sec-title{font-family:'Noto Serif KR',serif;font-weight:600;font-size:17px;margin:44px 0 6px;display:flex;align-items:baseline;gap:10px}
+.sec-title span{font-size:10px;letter-spacing:.24em;color:var(--muted);font-family:'Noto Sans KR',sans-serif;font-weight:400}
+.sec-sub{font-size:12px;color:var(--muted);font-weight:300;margin-bottom:18px}
+.brand{border-bottom:1px solid var(--line);padding:18px 2px;display:flex;gap:16px;align-items:baseline}
+.brand:first-of-type{border-top:1px solid var(--line)}
+.brand .no{font-family:'Noto Serif KR',serif;font-style:italic;font-size:13px;color:var(--muted);min-width:22px}
+.brand .bname{font-weight:700;font-size:15px;letter-spacing:.02em}
+.brand .breason{font-size:12.5px;color:#666;font-weight:300;margin-top:2px}
+.tip{background:#f1efeb;padding:18px;font-size:13px;font-weight:300;color:#333;margin-top:8px}
+.tip b{font-weight:700;font-size:11px;letter-spacing:.2em;display:block;margin-bottom:6px;color:var(--ink)}
+.r-actions{margin-top:40px;display:flex;flex-direction:column;gap:12px}
+footer{padding:28px 0 34px;text-align:center;font-size:10px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+.toast{
+  position:fixed;left:50%;bottom:40px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:.1em;
+  padding:10px 22px;opacity:0;pointer-events:none;transition:all .3s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">FASHION&nbsp;MBTI</div>
+    <div class="sub">Exhibition Edition</div>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="screen active">
+    <div class="intro-top">
+      <div class="kicker">Personal Style Test</div>
+      <h1 class="intro-title">당신의 옷장에는<br><em>어떤 취향</em>이<br>살고 있나요?</h1>
+      <p class="intro-desc">12개의 질문으로 나의 패션 유형을 찾고,<br>지금 나에게 가장 어울리는 브랜드를 만나보세요.</p>
+      <div class="intro-meta">
+        <div><strong>12</strong>Questions</div>
+        <div><strong>16</strong>Types</div>
+        <div><strong>3</strong>Brands</div>
+      </div>
+    </div>
+    <button class="btn" onclick="startQuiz()">시작하기 &nbsp;—</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="screen">
+    <div class="progress-track"><div class="progress-bar" id="pbar"></div></div>
+    <div class="qnum serif">Q.<b id="qcur">01</b> <span style="color:var(--muted)">/ 12</span></div>
+    <h2 class="qtext serif" id="qtext"></h2>
+    <div class="opts" id="opts"></div>
+    <button class="backlink" id="backBtn" onclick="goBack()">&larr; 이전 질문</button>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="screen">
+    <div class="r-card">
+      <span class="corner">FASHION MBTI</span>
+      <div class="r-kicker">Your Fashion Type</div>
+      <div class="r-code serif" id="rcode"></div>
+      <div class="r-name serif" id="rname"></div>
+      <div class="r-tag" id="rtag"></div>
+      <p class="r-desc" id="rdesc"></p>
+      <div class="axes" id="raxes"></div>
+    </div>
+
+    <div class="sec-title serif">추천 브랜드 <span>BRAND MATCH</span></div>
+    <div class="sec-sub">당신의 유형과 결이 닿아 있는 세 개의 브랜드</div>
+    <div id="rbrands"></div>
+
+    <div class="sec-title serif">스타일링 노트 <span>NOTE</span></div>
+    <div class="tip" id="rtip"></div>
+
+    <div class="r-actions">
+      <button class="btn" onclick="shareResult()">결과 공유하기</button>
+      <button class="btn ghost" onclick="restart()">테스트 다시하기</button>
+    </div>
+  </section>
+
+  <footer>Fashion Exhibition &middot; 2026</footer>
+</div>
+<div class="toast" id="toast">링크가 복사되었습니다</div>
+
+<script>
+/* ================= DATA ================= */
+/* 축: [0] M미니멀/X맥시멀  [1] C클래식/T트렌디  [2] F포멀/R릴랙스드  [3] N뉴트럴/V비비드 */
+
+const QUESTIONS = [
+  // Axis 0 : M / X
+  {axis:0, q:"옷장을 열었을 때 나의 풍경은?",
+   a:{t:"비슷한 톤의 옷들이 정갈하게 걸려 있다", v:"M"},
+   b:{t:"프린트, 컬러, 디테일이 제각각 가득하다", v:"X"}},
+  {axis:0, q:"액세서리에 대한 나의 태도는?",
+   a:{t:"시계나 심플한 링 하나면 충분하다", v:"M"},
+   b:{t:"포인트는 많을수록 좋다, 겹쳐 껴야 완성", v:"X"}},
+  {axis:0, q:"“오늘 좀 꾸몄는데?” 소리를 듣는 날, 나는",
+   a:{t:"핏과 소재가 좋은 심플한 룩을 입었다", v:"M"},
+   b:{t:"눈에 띄는 패턴과 과감한 레이어링을 했다", v:"X"}},
+  // Axis 1 : C / T
+  {axis:1, q:"쇼핑할 때 나의 기준은?",
+   a:{t:"10년을 입어도 질리지 않을 옷", v:"C"},
+   b:{t:"지금 이 순간 가장 힙한 옷", v:"T"}},
+  {axis:1, q:"SNS에서 난리 난 유행 아이템을 보면?",
+   a:{t:"“유행 지나면 못 입을 것 같은데…”", v:"C"},
+   b:{t:"바로 검색해서 장바구니에 담는다", v:"T"}},
+  {axis:1, q:"내가 동경하는 스타일은?",
+   a:{t:"시간이 지나도 변치 않는 클래식 무드", v:"C"},
+   b:{t:"지금 가장 화제인 셀럽의 최신 룩", v:"T"}},
+  // Axis 2 : F / R
+  {axis:2, q:"주말 약속에 나가는 나의 차림은?",
+   a:{t:"셔츠에 슬랙스, 구두까지 갖춰 입는다", v:"F"},
+   b:{t:"후드나 니트에 데님, 스니커즈", v:"R"}},
+  {axis:2, q:"더 끌리는 실루엣은?",
+   a:{t:"몸의 라인을 살리는 테일러드 핏", v:"F"},
+   b:{t:"여유롭고 편안한 오버 핏", v:"R"}},
+  {axis:2, q:"신발장에서 가장 손이 많이 가는 것은?",
+   a:{t:"로퍼, 부츠, 힐 같은 갖춘 신발", v:"F"},
+   b:{t:"스니커즈, 샌들 같은 편한 신발", v:"R"}},
+  // Axis 3 : N / V
+  {axis:3, q:"나의 옷장을 지배하는 컬러는?",
+   a:{t:"블랙, 화이트, 베이지, 그레이", v:"N"},
+   b:{t:"레드, 그린, 옐로 — 쨍하고 선명한 색", v:"V"}},
+  {axis:3, q:"같은 디자인의 옷, 나의 선택은?",
+   a:{t:"어디에나 어울리는 무채색", v:"N"},
+   b:{t:"시선을 사로잡는 컬러", v:"V"}},
+  {axis:3, q:"패턴에 대한 나의 생각은?",
+   a:{t:"역시 무지(솔리드)가 최고다", v:"N"},
+   b:{t:"스트라이프, 플라워, 그래픽 모두 환영", v:"V"}},
+];
+
+const AXES = [
+  {left:"M", right:"X", leftLabel:"미니멀", rightLabel:"맥시멀"},
+  {left:"C", right:"T", leftLabel:"클래식", rightLabel:"트렌디"},
+  {left:"F", right:"R", leftLabel:"포멀", rightLabel:"릴랙스드"},
+  {left:"N", right:"V", leftLabel:"뉴트럴", rightLabel:"비비드"},
+];
+
+const TYPES = {
+  MCFN:{name:"타임리스 미니멀리스트", tag:"덜어낼수록 완성되는 사람",
+    desc:"군더더기를 걷어낸 실루엣과 좋은 소재의 힘을 믿는 타입. 유행보다 완성도를 보고, 옷장은 작지만 어떤 조합도 실패하지 않습니다. 당신의 멋은 요란하지 않아서 더 오래 기억됩니다.",
+    brands:[["The Row","정제된 실루엣과 소재주의의 정점"],["Jil Sander","미니멀리즘의 교과서 같은 브랜드"],["COS","일상에서 즐기는 건축적인 미니멀"]],
+    tip:"화이트 셔츠, 울 코트, 미니멀 로퍼 — 기본에 투자할수록 당신다워집니다."},
+  MCFV:{name:"시크 모더니스트", tag:"절제된 룩에 컬러 한 방",
+    desc:"전체는 담백하게, 그러나 한 지점에는 반드시 시선이 머물게 하는 타입. 절제와 대담함의 균형 감각이 탁월해 ‘옷 잘 입는 사람’이라는 말을 자주 듣습니다.",
+    brands:[["Loewe","조용한 럭셔리에 위트 있는 컬러"],["Ferragamo","클래식 위에 얹는 모던한 색감"],["KUHO 구호","한국적 미니멀에 세련된 컬러 감각"]],
+    tip:"올 뉴트럴 룩에 컬러 백이나 슈즈 하나 — 당신의 공식은 이미 완성형입니다."},
+  MCRN:{name:"에센셜리스트", tag:"기본템의 장인",
+    desc:"좋은 티셔츠, 잘 떨어지는 팬츠, 편안한 스니커즈. 꾸미지 않은 듯한 차림에서 취향이 드러나는 타입입니다. 편안함과 멋이 공존할 수 있다는 것을 증명하는 사람.",
+    brands:[["Lemaire","힘을 뺀 우아함, 데일리의 품격"],["Auralee","소재로 말하는 조용한 베이식"],["Uniqlo U","누구나 닿을 수 있는 에센셜의 정석"]],
+    tip:"같은 기본템이라도 소재와 핏의 반 끗 차이가 당신의 룩을 완성합니다."},
+  MCRV:{name:"프레피 클린", tag:"단정한데 생기 있는",
+    desc:"깔끔한 실루엣에 밝은 에너지를 더하는 타입. 캠퍼스룩, 카디건, 산뜻한 컬러 포인트가 잘 어울리고, 어디서나 호감형 스타일이라는 이야기를 듣습니다.",
+    brands:[["Lacoste","스포티브 클래식의 원조"],["Beanpole 빈폴","단정한 프레피 무드의 정석"],["Polo Ralph Lauren","아메리칸 클래식의 밝은 얼굴"]],
+    tip:"네이비·아이보리 베이스에 그린이나 레드 포인트 — 생기가 곧 당신의 무기."},
+  MTFN:{name:"어반 아키텍트", tag:"도시적인 라인의 완성",
+    desc:"구조적인 실루엣과 절제된 컬러로 도시의 무드를 입는 타입. 트렌드를 알지만 휩쓸리지 않고, 자신만의 각도로 소화합니다. 당신의 룩에는 설계도가 있습니다.",
+    brands:[["WOOYOUNGMI 우영미","파리가 인정한 한국의 테일러링"],["Studio Nicholson","건축적 실루엣의 모던 유니폼"],["SYSTEM 시스템","도시적 무드의 컨템포러리"]],
+    tip:"어깨 라인이 좋은 재킷 하나가 열 벌의 옷보다 당신을 잘 설명합니다."},
+  MTFV:{name:"갤러리 뮤즈", tag:"미술관이 어울리는 룩",
+    desc:"미니멀한 베이스 위에 예술적인 컬러와 형태를 얹는 타입. 옷을 하나의 오브제처럼 다루며, 전시장에서 작품보다 먼저 눈에 띄곤 합니다.",
+    brands:[["Jacquemus","미니멀과 유희 사이의 컬러 감각"],["Courrèges","미래적인 라인과 선명한 무드"],["RECTO 렉토","절제된 실루엣의 컨템포러리 무드"]],
+    tip:"형태가 재미있는 원피스나 톱 하나로 룩 전체를 작품으로 만드세요."},
+  MTRN:{name:"콰이어트 스트리트", tag:"힘 뺀 멋의 정석",
+    desc:"편안한 실루엣, 낮은 채도, 그러나 아는 사람은 아는 디테일. 유행의 중심에 있으면서도 소리 내지 않는 타입입니다. ‘꾸안꾸’의 진짜 의미를 아는 사람.",
+    brands:[["Our Legacy","힘을 뺀 유럽 스트리트의 무드"],["Acne Studios","미니멀과 스트리트의 교집합"],["POTTERY 포터리","단정한 데일리 웨어의 밀도"]],
+    tip:"실루엣은 넉넉하게, 컬러는 낮게 — 디테일 하나로 차이를 만드세요."},
+  MTRV:{name:"시티 팝", tag:"경쾌한 도시의 컬러",
+    desc:"심플한 옷에 밝은 컬러와 위트를 더해 거리를 산뜻하게 만드는 타입. 무겁지 않은 멋, 보는 사람까지 기분 좋아지는 스타일의 소유자입니다.",
+    brands:[["Mardi Mercredi 마르디 메크르디","경쾌한 그래픽과 데일리 무드"],["Marithé François Girbaud 마리떼","레트로와 현재를 잇는 캐주얼"],["Covernat 커버낫","부담 없는 시티 캐주얼"]],
+    tip:"무채색 팬츠 위에 컬러 스웻셔츠 — 가볍게 입어도 충분히 빛납니다."},
+  XCFN:{name:"헤리티지 컬렉터", tag:"클래식의 깊이를 아는",
+    desc:"체크, 트위드, 트렌치처럼 시간이 쌓인 아이템을 풍성하게 즐기는 타입. 레이어링에 능하고, 옷마다 이야기가 있습니다. 오래된 것의 가치를 아는 사람.",
+    brands:[["Burberry","헤리티지 그 자체인 브리티시 클래식"],["Max Mara","시간을 이기는 소재와 실루엣"],["Brooks Brothers","아메리칸 트래디셔널의 원형"]],
+    tip:"트렌치·니트·스카프의 레이어링 — 겹이 쌓일수록 당신의 언어가 됩니다."},
+  XCFV:{name:"올드머니 글램", tag:"화려함도 품격 있게",
+    desc:"화려한 컬러와 장식을 사랑하지만 그 문법은 어디까지나 클래식. 우아함과 존재감을 동시에 갖춘 타입으로, 어느 자리에서든 주인공의 밀도를 냅니다.",
+    brands:[["Gucci","클래식과 화려함의 대명사"],["Miu Miu","우아함 속의 대담한 장식"],["Dolce&Gabbana","이탈리안 글램의 정수"]],
+    tip:"골드 액세서리와 리치한 소재 — 화려함의 기준을 품질로 세우세요."},
+  XCRN:{name:"보헤미안 드리머", tag:"자연스러운 낭만주의자",
+    desc:"흐르는 실루엣, 자연스러운 소재, 어스 톤의 컬러. 격식보다 무드를 입는 타입입니다. 당신의 스타일에는 여행과 계절의 공기가 담겨 있습니다.",
+    brands:[["Isabel Marant","파리지앤 보헤미안의 기준"],["Chloé","부드럽고 자유로운 페미닌"],["Free People","자연스러운 레이어드 무드"]],
+    tip:"리넨, 스웨이드, 니트 — 소재의 질감을 겹칠수록 낭만이 짙어집니다."},
+  XCRV:{name:"레트로 러버", tag:"빈티지 감성의 수집가",
+    desc:"과거의 컬러와 패턴에서 보물을 찾아내는 타입. 체크, 플라워, 선명한 원색을 자유롭게 섞으며, 남과 겹치지 않는 스타일을 완성합니다.",
+    brands:[["Marimekko","대담한 패턴의 북유럽 클래식"],["Benetton","컬러 블로킹의 원조"],["COMME des GARÇONS PLAY","클래식에 위트를 더한 아이콘"]],
+    tip:"빈티지 숍에서 찾은 한 벌이 당신 룩의 시그니처가 됩니다."},
+  XTFN:{name:"아방가르드", tag:"형태를 실험하는 사람",
+    desc:"블랙을 기반으로 실루엣 자체를 실험하는 타입. 비대칭, 드레이핑, 해체적인 디테일을 즐기며, 옷을 통해 태도를 말합니다. 패션이 곧 철학인 사람.",
+    brands:[["Rick Owens","다크 아방가르드의 제왕"],["Yohji Yamamoto","블랙과 드레이핑의 시인"],["Ann Demeulemeester","시적인 해체주의"]],
+    tip:"컬러 대신 실루엣과 셰이프로 말하세요 — 블랙은 무한한 캔버스입니다."},
+  XTFV:{name:"맥시멀 아이콘", tag:"존재감이 곧 스타일",
+    desc:"과감한 컬러, 강한 실루엣, 최신 트렌드를 두려움 없이 소화하는 타입. 런웨이와 거리의 경계가 없으며, 등장만으로 공간의 분위기를 바꿉니다.",
+    brands:[["Balenciaga","시대의 실루엣을 만드는 브랜드"],["Versace","화려함의 대명사"],["Blumarine","Y2K 글램의 부활"]],
+    tip:"‘과하다’ 싶을 때 하나 더 — 그 한 끗이 당신을 아이콘으로 만듭니다."},
+  XTRN:{name:"스트리트 아카이버", tag:"유틸리티와 스트리트 사이",
+    desc:"워크웨어, 밀리터리, 스트리트의 아카이브를 꿰고 있는 타입. 낡을수록 멋있어지는 옷을 알고, 브랜드의 역사와 맥락까지 입습니다.",
+    brands:[["Carhartt WIP","워크웨어 스트리트의 표준"],["Stüssy","스트리트 컬처의 원류"],["thisisneverthat 디스이즈네버댓","한국 스트리트의 아카이브"]],
+    tip:"카고 팬츠와 빈티지 워싱 — 시간이 만든 질감이 당신의 포인트입니다."},
+  XTRV:{name:"하이프 세터", tag:"제일 먼저 입는 사람",
+    desc:"새로운 것, 화제가 되는 것, 재미있는 것을 가장 빨리 시도하는 타입. 컬러와 그래픽, 믹스매치에 거침이 없고 주변의 스타일 레이더가 되어 줍니다.",
+    brands:[["ADER error 아더에러","실험적인 컬러와 유쾌한 해체"],["Supreme","하이프 컬처의 상징"],["KIRSH 키르시","키치한 그래픽과 컬러 팝"]],
+    tip:"오늘의 유행을 즐기되 하나쯤은 당신만의 시그니처로 남기세요."},
+};
+
+/* ================= LOGIC ================= */
+let current = 0;
+let answers = []; // 'M'|'X' etc per question
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.remove('active'); void el.offsetWidth;
+  el.classList.add('active');
+  window.scrollTo({top:0});
+}
+
+function startQuiz(){
+  current = 0; answers = [];
+  renderQuestion();
+  show('quiz');
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  document.getElementById('qcur').textContent = String(current+1).padStart(2,'0');
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('pbar').style.width = (current/QUESTIONS.length*100)+'%';
+  document.getElementById('backBtn').style.visibility = current===0 ? 'hidden':'visible';
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  [['a','A.'],['b','B.']].forEach(([key,mark])=>{
+    const o = q[key];
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = '<span class="mark">'+mark+'</span><span>'+o.t+'</span>';
+    btn.onclick = ()=>answer(o.v);
+    opts.appendChild(btn);
+  });
+  const quiz = document.getElementById('quiz');
+  quiz.classList.remove('active'); void quiz.offsetWidth; quiz.classList.add('active');
+}
+
+function answer(v){
+  answers[current] = v;
+  if(current < QUESTIONS.length-1){ current++; renderQuestion(); }
+  else { showResult(); }
+}
+
+function goBack(){
+  if(current>0){ current--; renderQuestion(); }
+}
+
+function computeResult(){
+  const counts = {};
+  answers.forEach(v=>counts[v]=(counts[v]||0)+1);
+  let code = '';
+  const pct = [];
+  AXES.forEach(ax=>{
+    const l = counts[ax.left]||0, r = counts[ax.right]||0;
+    const winner = l>=r ? ax.left : ax.right;
+    code += winner;
+    pct.push({ax, l, r, total:l+r});
+  });
+  return {code, pct};
+}
+
+function showResult(){
+  const {code, pct} = computeResult();
+  const t = TYPES[code];
+  document.getElementById('rcode').textContent = code;
+  document.getElementById('rname').textContent = t.name;
+  document.getElementById('rtag').textContent = '“'+t.tag+'”';
+  document.getElementById('rdesc').textContent = t.desc;
+
+  const axesEl = document.getElementById('raxes');
+  axesEl.innerHTML = '';
+  pct.forEach(p=>{
+    const lp = Math.round(p.l/p.total*100);
+    const rp = 100-lp;
+    const leftWin = p.l>=p.r;
+    const div = document.createElement('div');
+    div.className='axis';
+    div.innerHTML =
+      '<div class="labels">'+
+        '<span class="'+(leftWin?'on':'')+'">'+p.ax.left+' '+p.ax.leftLabel+' '+lp+'%</span>'+
+        '<span class="'+(!leftWin?'on':'')+'">'+rp+'% '+p.ax.rightLabel+' '+p.ax.right+'</span>'+
+      '</div>'+
+      '<div class="track"><div class="fill" style="'+(leftWin?('left:0;width:'+lp+'%'):('right:0;width:'+rp+'%'))+'"></div></div>';
+    axesEl.appendChild(div);
+  });
+
+  const bEl = document.getElementById('rbrands');
+  bEl.innerHTML = '';
+  t.brands.forEach((b,i)=>{
+    const div = document.createElement('div');
+    div.className='brand';
+    div.innerHTML = '<span class="no">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<div><div class="bname">'+b[0]+'</div><div class="breason">'+b[1]+'</div></div>';
+    bEl.appendChild(div);
+  });
+
+  document.getElementById('rtip').innerHTML = '<b>STYLING NOTE</b>'+t.tip;
+  document.getElementById('pbar').style.width = '100%';
+  show('result');
+}
+
+function restart(){
+  current=0; answers=[];
+  show('intro');
+}
+
+function shareResult(){
+  const {code} = computeResult();
+  const t = TYPES[code];
+  const text = '나의 패션 MBTI는 '+code+' — '+t.name+' “'+t.tag+'”';
+  const url = location.href.split('#')[0];
+  if(navigator.share){
+    navigator.share({title:'FASHION MBTI', text, url}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text+'\n'+url).then(()=>{
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'),2000);
+    });
+  }
+}
+</script>
+</body>
+</html>
