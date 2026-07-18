@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>O.F.F. Inter-View — 나의 패션 유형 찾기</title>
+<meta property="og:title" content="O.F.F. Inter-View">
+<meta property="og:description" content="12개의 질문으로 알아보는 나의 패션 유형과 어울리는 브랜드">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --ink:#1d1d1f;
+  --black:#000;
+  --paper:#ffffff;
+  --line:#d2d2d7;
+  --muted:#86868b;
+  --fill:#f5f5f7;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter','Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'SF Pro KR','SF Pro Display',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  letter-spacing:-0.012em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 24px}
+.screen{display:none;flex:1;flex-direction:column}
+.screen.active{display:flex;animation:fadein .5s cubic-bezier(.25,.1,.25,1)}
+@keyframes fadein{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ---------- header ---------- */
+header{
+  padding:18px 0 14px;
+  border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+}
+header .logo svg{height:30px;width:auto;display:block}
+header .sub{font-size:10px;font-weight:600;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+
+/* ---------- intro ---------- */
+#intro{justify-content:space-between;padding-bottom:36px}
+.intro-top{padding-top:10vh}
+.intro-logo svg{height:44px;width:auto;display:block;margin-bottom:36px}
+.kicker{font-size:11px;font-weight:600;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.intro-title{font-size:40px;font-weight:800;line-height:1.18;letter-spacing:-0.025em;margin-bottom:20px}
+.intro-desc{font-size:15px;color:var(--muted);font-weight:400;margin-bottom:8px}
+.intro-meta{margin-top:36px;border-top:1px solid var(--line);padding-top:18px;display:flex;gap:36px}
+.intro-meta div{font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--muted)}
+.intro-meta strong{display:block;font-size:22px;color:var(--ink);font-weight:700;letter-spacing:-0.02em}
+.btn{
+  display:block;width:100%;
+  background:var(--black);color:#fff;
+  border:none;cursor:pointer;
+  font-family:inherit;
+  font-size:15px;font-weight:600;letter-spacing:0;
+  padding:16px 0;text-align:center;
+  border-radius:980px;
+  transition:transform .15s ease,opacity .2s;
+}
+.btn:active{transform:scale(.98);opacity:.85}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+
+/* ---------- quiz ---------- */
+#quiz{padding-bottom:36px}
+.progress-track{height:2px;background:var(--fill);margin-top:0;border-radius:2px}
+.progress-bar{height:100%;background:var(--black);width:0%;transition:width .4s cubic-bezier(.25,.1,.25,1);border-radius:2px}
+.qnum{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--muted);padding:30px 0 10px}
+.qnum b{color:var(--ink);font-size:14px}
+.qtext{font-size:23px;font-weight:700;line-height:1.35;letter-spacing:-0.02em;min-height:92px;margin-bottom:24px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  border:1px solid var(--line);background:#fff;
+  text-align:left;padding:15px 16px;cursor:pointer;
+  font-family:inherit;font-size:14.5px;font-weight:450;line-height:1.5;color:var(--ink);
+  display:flex;gap:12px;align-items:flex-start;
+  border-radius:14px;
+  transition:border-color .15s,background .15s,transform .12s;
+}
+.opt .mark{font-size:12px;font-weight:700;color:var(--muted);padding-top:2.5px;letter-spacing:.02em}
+.opt:active{border-color:var(--black);background:var(--fill);transform:scale(.99)}
+.backlink{margin-top:auto;padding-top:22px;background:none;border:none;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;text-align:left;font-family:inherit}
+
+/* ---------- result ---------- */
+#result{padding-bottom:44px}
+.r-card{border:1px solid var(--line);background:#fff;padding:34px 26px 28px;margin-top:26px;position:relative;border-radius:18px}
+.r-card .corner{position:absolute;top:14px;right:18px;font-size:9px;font-weight:600;letter-spacing:.18em;color:var(--muted)}
+.r-kicker{font-size:10px;font-weight:600;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+.r-code{font-weight:800;font-size:56px;letter-spacing:-0.02em;line-height:1;margin-bottom:10px}
+.r-name{font-weight:700;font-size:22px;letter-spacing:-0.02em;margin-bottom:4px}
+.r-tag{font-size:13.5px;color:var(--muted);font-weight:450;margin-bottom:22px}
+.r-desc{font-size:14px;font-weight:400;color:#3a3a3c;border-top:1px solid var(--line);padding-top:20px}
+.axes{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.axis .labels{display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:6px}
+.axis .labels .on{color:var(--ink);font-weight:700}
+.axis .track{height:4px;background:var(--fill);position:relative;border-radius:4px;overflow:hidden}
+.axis .fill{position:absolute;top:0;height:100%;background:var(--black);border-radius:4px}
+.sec-title{font-weight:700;font-size:17px;letter-spacing:-0.02em;margin:44px 0 4px;display:flex;align-items:baseline;gap:10px}
+.sec-title span{font-size:9px;font-weight:600;letter-spacing:.2em;color:var(--muted)}
+.sec-sub{font-size:12.5px;color:var(--muted);font-weight:400;margin-bottom:16px}
+.trait{
+  border-bottom:1px solid var(--fill);
+  padding:12px 2px;display:flex;gap:12px;align-items:flex-start;
+  font-size:13.5px;font-weight:400;color:#3a3a3c;line-height:1.55;
+}
+.trait:first-of-type{border-top:1px solid var(--fill)}
+.trait .check{color:var(--ink);font-size:12px;font-weight:700;padding-top:2px;min-width:14px}
+.brand{border-bottom:1px solid var(--fill);padding:16px 2px;display:flex;gap:16px;align-items:baseline}
+.brand:first-of-type{border-top:1px solid var(--fill)}
+.brand .no{font-size:12px;font-weight:600;color:var(--muted);min-width:22px}
+.brand .bname{font-weight:700;font-size:15px;letter-spacing:-0.01em}
+.brand .breason{font-size:12.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.tip{background:var(--fill);padding:18px;font-size:13px;font-weight:400;color:#3a3a3c;margin-top:8px;border-radius:14px}
+.tip b{font-weight:700;font-size:10px;letter-spacing:.18em;display:block;margin-bottom:6px;color:var(--ink)}
+.r-actions{margin-top:40px;display:flex;flex-direction:column;gap:12px}
+footer{padding:26px 0 32px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.toast{
+  position:fixed;left:50%;bottom:40px;transform:translateX(-50%) translateY(20px);
+  background:var(--black);color:#fff;font-size:12.5px;font-weight:500;
+  padding:11px 24px;border-radius:980px;opacity:0;pointer-events:none;transition:all .3s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-label="O.F.F.">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="226.5 51.5 160 62" fill="currentColor"><path fill-rule="evenodd" d="M 243.558594 84.867188 L 259.703125 84.867188 L 259.703125 68.855469 L 243.558594 68.855469 Z M 275.632812 100.925781 L 227.476562 100.925781 L 227.476562 52.796875 L 275.632812 52.796875 Z M 275.632812 100.925781 "/><path fill-rule="evenodd" d="M 351.613281 100.929688 L 335.546875 100.929688 L 335.546875 52.796875 L 383.699219 52.796875 L 383.699219 68.816406 L 351.613281 68.816406 Z M 351.613281 100.929688 "/><path fill-rule="evenodd" d="M 297.585938 100.929688 L 281.527344 100.929688 L 281.527344 52.796875 L 329.675781 52.796875 L 329.675781 68.820312 L 297.585938 68.820312 Z M 297.585938 100.929688 "/><path fill-rule="evenodd" d="M 313.617188 84.921875 L 329.679688 84.921875 L 329.679688 100.917969 L 313.617188 100.917969 Z M 313.617188 84.921875 "/><path fill-rule="evenodd" d="M 383.710938 100.910156 L 367.683594 100.910156 L 367.683594 84.914062 L 383.710938 84.914062 Z M 383.710938 100.910156 "/><path fill-rule="evenodd" d="M 228.328125 111.175781 L 232.566406 111.175781 L 232.566406 107.46875 L 228.328125 107.46875 Z M 227.476562 107.980469 C 227.476562 107.515625 227.558594 107.199219 227.722656 107.027344 C 227.890625 106.855469 228.207031 106.769531 228.675781 106.769531 L 232.214844 106.769531 C 232.675781 106.769531 232.992188 106.855469 233.15625 107.027344 C 233.324219 107.195312 233.40625 107.515625 233.40625 107.980469 L 233.40625 110.679688 C 233.40625 111.152344 233.324219 111.46875 233.15625 111.636719 C 232.992188 111.804688 232.675781 111.890625 232.214844 111.890625 L 228.675781 111.890625 C 228.207031 111.890625 227.890625 111.804688 227.722656 111.632812 C 227.558594 111.460938 227.476562 111.144531 227.476562 110.679688 Z M 227.476562 107.980469 "/><path fill-rule="evenodd" d="M 235.648438 111.886719 L 235.648438 107.6875 L 239.832031 107.6875 L 239.832031 108.3125 L 236.445312 108.3125 L 236.445312 109.609375 L 238.355469 109.609375 L 238.355469 110.222656 L 236.445312 110.222656 L 236.445312 111.886719 Z M 235.648438 111.886719 "/><path fill-rule="evenodd" d="M 241.035156 111.886719 L 241.035156 107.6875 L 245.21875 107.6875 L 245.21875 108.3125 L 241.828125 108.3125 L 241.828125 109.609375 L 243.742188 109.609375 L 243.742188 110.222656 L 241.828125 110.222656 L 241.828125 111.886719 Z M 241.035156 111.886719 "/><path fill-rule="evenodd" d="M 252.148438 108.3125 L 252.148438 111.886719 L 251.355469 111.886719 L 251.355469 108.3125 L 249.371094 108.3125 L 249.371094 107.6875 L 254.144531 107.6875 L 254.144531 108.3125 Z M 252.148438 108.3125 "/><path fill-rule="evenodd" d="M 255.332031 111.886719 L 255.332031 107.695312 L 256.128906 107.695312 L 256.128906 109.378906 L 259.476562 109.378906 L 259.476562 107.695312 L 260.273438 107.695312 L 260.273438 111.886719 L 259.476562 111.886719 L 259.476562 110.015625 L 256.128906 110.015625 L 256.128906 111.886719 Z M 255.332031 111.886719 "/><path fill-rule="evenodd" d="M 262.214844 111.886719 L 262.214844 107.6875 L 266.445312 107.6875 L 266.445312 108.3125 L 263.007812 108.3125 L 263.007812 109.390625 L 265.082031 109.390625 L 265.082031 110.015625 L 263.007812 110.015625 L 263.007812 111.273438 L 266.484375 111.273438 L 266.484375 111.886719 Z M 262.214844 111.886719 "/><path fill-rule="evenodd" d="M 272.039062 111.886719 L 272.039062 106.769531 L 276.910156 106.769531 L 276.910156 107.46875 L 272.894531 107.46875 L 272.894531 109.144531 L 275.1875 109.144531 L 275.1875 109.828125 L 272.894531 109.828125 L 272.894531 111.886719 Z M 272.039062 111.886719 "/><path fill-rule="evenodd" d="M 278.601562 111.890625 L 277.8125 111.890625 L 277.8125 107.695312 L 278.601562 107.695312 Z M 278.601562 111.890625 "/><path fill-rule="evenodd" d="M 279.882812 111.886719 L 281.996094 109.738281 L 279.851562 107.6875 L 280.925781 107.6875 L 282.441406 109.210938 L 283.832031 107.6875 L 284.808594 107.6875 L 282.878906 109.636719 L 285.238281 111.886719 L 284.125 111.886719 L 282.429688 110.183594 L 280.90625 111.886719 Z M 279.882812 111.886719 "/><path fill-rule="evenodd" d="M 286.40625 111.886719 L 286.40625 107.6875 L 290.640625 107.6875 L 290.640625 108.3125 L 287.203125 108.3125 L 287.203125 109.390625 L 289.273438 109.390625 L 289.273438 110.015625 L 287.203125 110.015625 L 287.203125 111.273438 L 290.679688 111.273438 L 290.679688 111.886719 Z M 286.40625 111.886719 "/><path fill-rule="evenodd" d="M 294.828125 108.3125 L 293.289062 108.3125 L 293.289062 111.253906 L 294.828125 111.253906 C 295.511719 111.253906 295.996094 111.140625 296.289062 110.910156 C 296.574219 110.675781 296.722656 110.296875 296.722656 109.769531 C 296.722656 109.25 296.574219 108.878906 296.285156 108.652344 C 295.992188 108.421875 295.503906 108.3125 294.828125 108.3125 M 294.914062 107.6875 C 295.3125 107.6875 295.652344 107.710938 295.925781 107.765625 C 296.199219 107.820312 296.421875 107.902344 296.601562 108.011719 C 296.886719 108.191406 297.113281 108.4375 297.273438 108.75 C 297.433594 109.058594 297.515625 109.40625 297.515625 109.777344 C 297.515625 110.484375 297.300781 111.011719 296.871094 111.363281 C 296.441406 111.714844 295.789062 111.886719 294.914062 111.886719 L 292.492188 111.886719 L 292.492188 107.6875 Z M 294.914062 107.6875 "/><path fill-rule="evenodd" d="M 303.878906 111.890625 L 303.089844 111.890625 L 303.089844 107.695312 L 303.878906 107.695312 Z M 303.878906 111.890625 "/><path fill-rule="evenodd" d="M 308.464844 108.3125 L 306.921875 108.3125 L 306.921875 111.253906 L 308.464844 111.253906 C 309.148438 111.253906 309.632812 111.140625 309.921875 110.910156 C 310.210938 110.675781 310.359375 110.296875 310.359375 109.769531 C 310.359375 109.25 310.210938 108.878906 309.917969 108.652344 C 309.625 108.421875 309.140625 108.3125 308.464844 108.3125 M 308.550781 107.6875 C 308.953125 107.6875 309.285156 107.710938 309.5625 107.765625 C 309.832031 107.820312 310.058594 107.902344 310.234375 108.011719 C 310.523438 108.191406 310.746094 108.4375 310.910156 108.75 C 311.070312 109.058594 311.148438 109.40625 311.148438 109.777344 C 311.148438 110.484375 310.9375 111.011719 310.507812 111.363281 C 310.078125 111.714844 309.425781 111.886719 308.550781 111.886719 L 306.128906 111.886719 L 306.128906 107.6875 Z M 308.550781 107.6875 "/><path fill-rule="evenodd" d="M 313.035156 111.886719 L 313.035156 107.6875 L 317.265625 107.6875 L 317.265625 108.3125 L 313.828125 108.3125 L 313.828125 109.390625 L 315.902344 109.390625 L 315.902344 110.015625 L 313.828125 110.015625 L 313.828125 111.273438 L 317.304688 111.273438 L 317.304688 111.886719 Z M 313.035156 111.886719 "/><path fill-rule="evenodd" d="M 319.777344 110.300781 L 322.007812 110.300781 L 320.886719 108.300781 Z M 318.109375 111.890625 L 320.542969 107.6875 L 321.265625 107.6875 L 323.753906 111.890625 L 322.894531 111.890625 L 322.347656 110.90625 L 319.441406 110.90625 L 318.902344 111.890625 Z M 318.109375 111.890625 "/><path fill-rule="evenodd" d="M 329.414062 111.253906 L 332.925781 111.253906 L 332.925781 108.3125 L 329.414062 108.3125 Z M 328.625 108.683594 C 328.625 108.300781 328.695312 108.039062 328.839844 107.898438 C 328.984375 107.753906 329.257812 107.6875 329.652344 107.6875 L 332.691406 107.6875 C 333.085938 107.6875 333.359375 107.753906 333.503906 107.898438 C 333.648438 108.039062 333.722656 108.300781 333.722656 108.683594 L 333.722656 110.898438 C 333.722656 111.28125 333.648438 111.542969 333.503906 111.683594 C 333.363281 111.820312 333.089844 111.890625 332.691406 111.890625 L 329.652344 111.890625 C 329.25 111.890625 328.976562 111.820312 328.835938 111.683594 C 328.695312 111.546875 328.625 111.285156 328.625 110.898438 Z M 328.625 108.683594 "/><path fill-rule="evenodd" d="M 335.566406 111.886719 L 335.566406 107.6875 L 339.75 107.6875 L 339.75 108.3125 L 336.359375 108.3125 L 336.359375 109.609375 L 338.273438 109.609375 L 338.273438 110.222656 L 336.359375 110.222656 L 336.359375 111.886719 Z M 335.566406 111.886719 "/><path fill-rule="evenodd" d="M 345.011719 111.886719 L 345.011719 106.769531 L 349.882812 106.769531 L 349.882812 107.46875 L 345.871094 107.46875 L 345.871094 109.144531 L 348.160156 109.144531 L 348.160156 109.828125 L 345.871094 109.828125 L 345.871094 111.886719 Z M 345.011719 111.886719 "/><path fill-rule="evenodd" d="M 350.867188 110.300781 L 353.101562 110.300781 L 351.980469 108.300781 Z M 349.203125 111.890625 L 351.632812 107.6875 L 352.359375 107.6875 L 354.847656 111.890625 L 353.984375 111.890625 L 353.4375 110.90625 L 350.535156 110.90625 L 349.996094 111.890625 Z M 349.203125 111.890625 "/><path fill-rule="evenodd" d="M 359.816406 108.3125 L 356.867188 108.3125 L 356.867188 109.402344 L 359.566406 109.402344 C 359.960938 109.402344 360.226562 109.46875 360.371094 109.605469 C 360.515625 109.742188 360.585938 110.003906 360.585938 110.394531 L 360.585938 110.898438 C 360.585938 111.285156 360.515625 111.546875 360.378906 111.683594 C 360.234375 111.820312 359.964844 111.886719 359.566406 111.886719 L 357.007812 111.886719 C 356.609375 111.886719 356.335938 111.820312 356.191406 111.683594 C 356.050781 111.546875 355.976562 111.285156 355.976562 110.898438 L 355.976562 110.78125 L 356.703125 110.628906 L 356.703125 111.253906 L 359.875 111.253906 L 359.875 110.074219 L 357.167969 110.074219 C 356.769531 110.074219 356.5 110.003906 356.359375 109.867188 C 356.21875 109.730469 356.144531 109.46875 356.144531 109.082031 L 356.144531 108.683594 C 356.144531 108.300781 356.21875 108.039062 356.359375 107.898438 C 356.5 107.753906 356.769531 107.6875 357.167969 107.6875 L 359.507812 107.6875 C 359.898438 107.6875 360.167969 107.753906 360.316406 107.890625 C 360.464844 108.027344 360.539062 108.265625 360.539062 108.605469 L 360.539062 108.707031 L 359.816406 108.863281 Z M 359.816406 108.3125 "/><path fill-rule="evenodd" d="M 362.425781 111.886719 L 362.425781 107.695312 L 363.222656 107.695312 L 363.222656 109.378906 L 366.570312 109.378906 L 366.570312 107.695312 L 367.367188 107.695312 L 367.367188 111.886719 L 366.570312 111.886719 L 366.570312 110.015625 L 363.222656 110.015625 L 363.222656 111.886719 Z M 362.425781 111.886719 "/><path fill-rule="evenodd" d="M 370.078125 111.890625 L 369.289062 111.890625 L 369.289062 107.695312 L 370.078125 107.695312 Z M 370.078125 111.890625 "/><path fill-rule="evenodd" d="M 372.695312 111.253906 L 376.207031 111.253906 L 376.207031 108.3125 L 372.695312 108.3125 Z M 371.902344 108.683594 C 371.902344 108.300781 371.976562 108.039062 372.121094 107.898438 C 372.265625 107.753906 372.535156 107.6875 372.9375 107.6875 L 375.96875 107.6875 C 376.367188 107.6875 376.640625 107.753906 376.785156 107.898438 C 376.929688 108.039062 377.003906 108.300781 377.003906 108.683594 L 377.003906 110.898438 C 377.003906 111.28125 376.929688 111.542969 376.785156 111.683594 C 376.644531 111.820312 376.371094 111.890625 375.96875 111.890625 L 372.9375 111.890625 C 372.53125 111.890625 372.257812 111.820312 372.117188 111.683594 C 371.972656 111.546875 371.902344 111.285156 371.902344 110.898438 Z M 371.902344 108.683594 "/><path fill-rule="evenodd" d="M 379.519531 108.527344 C 379.539062 108.652344 379.554688 108.777344 379.5625 108.902344 C 379.574219 109.027344 379.578125 109.152344 379.578125 109.28125 L 379.578125 111.886719 L 378.847656 111.886719 L 378.847656 107.683594 L 379.453125 107.683594 L 382.535156 110.433594 C 382.625 110.507812 382.714844 110.59375 382.796875 110.6875 C 382.878906 110.78125 382.960938 110.886719 383.039062 111.007812 C 383.015625 110.882812 383 110.753906 382.992188 110.625 C 382.976562 110.496094 382.972656 110.363281 382.972656 110.222656 L 382.972656 107.683594 L 383.703125 107.683594 L 383.703125 111.886719 L 383.160156 111.886719 L 380.015625 109.105469 C 379.90625 109 379.808594 108.902344 379.730469 108.8125 C 379.652344 108.71875 379.582031 108.625 379.519531 108.527344 "/></svg>
+    </div>
+    <div class="sub">Inter-View</div>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro" class="screen active">
+    <div class="intro-top">
+      <div class="kicker">O.F.F. Inter-View — Personal Style Test</div>
+      <h1 class="intro-title">당신의 옷장에는<br>어떤 취향이<br>살고 있나요?</h1>
+      <p class="intro-desc">12개의 질문으로 나의 패션 유형을 찾고,<br>지금 나에게 가장 어울리는 브랜드를 만나보세요.</p>
+    </div>
+    <button class="btn" onclick="startQuiz()">시작하기</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="screen">
+    <div class="progress-track"><div class="progress-bar" id="pbar"></div></div>
+    <div class="qnum">Q.<b id="qcur">01</b> <span style="color:var(--muted)">/ 12</span></div>
+    <h2 class="qtext" id="qtext"></h2>
+    <div class="opts" id="opts"></div>
+    <button class="backlink" id="backBtn" onclick="goBack()">&larr; 이전 질문</button>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="screen">
+    <div class="r-card">
+      <span class="corner">O.F.F.</span>
+      <div class="r-kicker">Your Fashion Type</div>
+      <div class="r-code" id="rcode"></div>
+      <div class="r-name" id="rname"></div>
+      <div class="r-tag" id="rtag"></div>
+      <p class="r-desc" id="rdesc"></p>
+      <div class="axes" id="raxes"></div>
+    </div>
+
+    <div class="sec-title">유형 분석 <span>ABOUT YOU</span></div>
+    <div class="sec-sub">이런 특징, 당신 얘기 아닌가요?</div>
+    <div id="rtraits"></div>
+
+    <div class="sec-title">추천 브랜드 <span>BRAND MATCH</span></div>
+    <div class="sec-sub">당신의 유형과 결이 닿아 있는 세 개의 브랜드</div>
+    <div id="rbrands"></div>
+
+    <div class="sec-title">스타일링 노트 <span>NOTE</span></div>
+    <div class="tip" id="rtip"></div>
+
+    <div class="r-actions">
+      <button class="btn" onclick="shareResult()">결과 공유하기</button>
+      <button class="btn ghost" onclick="restart()">테스트 다시하기</button>
+    </div>
+  </section>
+
+  <footer>O.F.F. Inter-View</footer>
+</div>
+<div class="toast" id="toast">링크가 복사되었습니다</div>
+
+<script>
+/* ================= DATA ================= */
+/* 축: [0] M미니멀/X맥시멀  [1] C클래식/T트렌디  [2] F포멀/R릴랙스드  [3] N뉴트럴/V비비드 */
+/* 각 문항 4지선다: [강한 왼쪽 1.0, 약한 왼쪽 0.6, 약한 오른쪽 0.6, 강한 오른쪽 1.0] */
+
+const QUESTIONS = [
+  // Axis 0 : M / X
+  {axis:0, q:"옷장을 열었을 때 나의 풍경은?", opts:[
+    {t:"무채색 위주, 비슷한 옷들이 톤별로 정갈하게 걸려 있다", s:"M", w:1},
+    {t:"대체로 차분하지만, 포인트가 되는 옷이 몇 벌 있다", s:"M", w:0.6},
+    {t:"기본템도 있지만, 눈에 띄는 옷이 더 많다", s:"X", w:0.6},
+    {t:"프린트·컬러·디테일이 제각각, 열 때마다 새롭다", s:"X", w:1}]},
+  {axis:0, q:"액세서리에 대한 나의 태도는?", opts:[
+    {t:"거의 하지 않는다, 시계 하나면 충분", s:"M", w:1},
+    {t:"심플한 것 한두 개로 마무리한다", s:"M", w:0.6},
+    {t:"그날 룩에 맞춰 포인트를 챙기는 편이다", s:"X", w:0.6},
+    {t:"겹쳐 끼고 겹쳐 걸어야 비로소 완성된다", s:"X", w:1}]},
+  {axis:0, q:"“오늘 좀 꾸몄는데?” 소리를 듣는 날, 나는", opts:[
+    {t:"좋은 소재의 심플한 옷을 정갈하게 입었다", s:"M", w:1},
+    {t:"평소보다 핏과 마감에 조금 더 신경 썼다", s:"M", w:0.6},
+    {t:"컬러나 패턴 아이템 하나를 더했다", s:"X", w:0.6},
+    {t:"과감한 레이어링과 소품으로 승부했다", s:"X", w:1}]},
+  // Axis 1 : C / T
+  {axis:1, q:"쇼핑할 때 나의 기준은?", opts:[
+    {t:"10년을 입어도 질리지 않을 옷", s:"C", w:1},
+    {t:"유행을 덜 타는 디자인 위주로 고른다", s:"C", w:0.6},
+    {t:"요즘 분위기가 반영된 옷에 손이 간다", s:"T", w:0.6},
+    {t:"지금 이 순간 가장 힙한 옷", s:"T", w:1}]},
+  {axis:1, q:"SNS에서 난리 난 유행 아이템을 보면?", opts:[
+    {t:"어차피 한철, 크게 관심이 가지 않는다", s:"C", w:1},
+    {t:"예쁘긴 한데, 사진만 저장해 둔다", s:"C", w:0.6},
+    {t:"며칠 고민하다 결국 검색해 본다", s:"T", w:0.6},
+    {t:"품절되기 전에 바로 장바구니에 담는다", s:"T", w:1}]},
+  {axis:1, q:"내가 동경하는 스타일은?", opts:[
+    {t:"시대가 지나도 변하지 않는 클래식 아이콘", s:"C", w:1},
+    {t:"클래식을 자기 식으로 다듬어 입는 사람", s:"C", w:0.6},
+    {t:"트렌드를 감각적으로 소화하는 사람", s:"T", w:0.6},
+    {t:"유행을 앞서가는, 지금 가장 화제인 셀럽", s:"T", w:1}]},
+  // Axis 2 : F / R
+  {axis:2, q:"주말 약속에 나가는 나의 차림은?", opts:[
+    {t:"셔츠에 슬랙스, 구두까지 갖춰 입는다", s:"F", w:1},
+    {t:"단정한 니트나 재킷으로 격식을 살짝 더한다", s:"F", w:0.6},
+    {t:"깔끔한 티셔츠에 데님, 가볍게 입는다", s:"R", w:0.6},
+    {t:"후드에 조거 팬츠, 편안함이 최우선", s:"R", w:1}]},
+  {axis:2, q:"더 끌리는 실루엣은?", opts:[
+    {t:"몸의 라인을 살리는 테일러드 핏", s:"F", w:1},
+    {t:"어깨는 잡아주되 전체적으로는 여유 있게", s:"F", w:0.6},
+    {t:"세미 오버핏 정도의 편안한 실루엣", s:"R", w:0.6},
+    {t:"넉넉한 오버핏, 자연스럽게 흐르는 라인", s:"R", w:1}]},
+  {axis:2, q:"신발장에서 가장 손이 많이 가는 것은?", opts:[
+    {t:"로퍼, 부츠, 힐 같은 갖춘 신발", s:"F", w:1},
+    {t:"깔끔한 레더 스니커즈", s:"F", w:0.6},
+    {t:"데일리로 신는 캔버스 스니커즈", s:"R", w:0.6},
+    {t:"러닝화, 샌들, 슬리퍼 — 무조건 편한 것", s:"R", w:1}]},
+  // Axis 3 : N / V
+  {axis:3, q:"나의 옷장을 지배하는 컬러는?", opts:[
+    {t:"블랙, 화이트, 그레이 — 무채색뿐", s:"N", w:1},
+    {t:"베이지, 네이비 같은 차분한 컬러", s:"N", w:0.6},
+    {t:"기본색에 파스텔·포인트 컬러가 섞여 있다", s:"V", w:0.6},
+    {t:"레드, 그린, 옐로 — 쨍한 색이 가득", s:"V", w:1}]},
+  {axis:3, q:"같은 디자인의 옷, 나의 선택은?", opts:[
+    {t:"고민 없이 무채색", s:"N", w:1},
+    {t:"웬만하면 무난한 색, 실패가 없다", s:"N", w:0.6},
+    {t:"반반 고민하다 결국 컬러에 손이 간다", s:"V", w:0.6},
+    {t:"무조건 시선을 사로잡는 컬러", s:"V", w:1}]},
+  {axis:3, q:"패턴에 대한 나의 생각은?", opts:[
+    {t:"무지(솔리드)가 아니면 사지 않는다", s:"N", w:1},
+    {t:"스트라이프 정도의 잔잔한 패턴까지는 좋다", s:"N", w:0.6},
+    {t:"체크, 플라워 등 패턴 아이템을 즐겨 입는다", s:"V", w:0.6},
+    {t:"화려한 그래픽과 믹스 패턴도 대환영", s:"V", w:1}]},
+];
+
+const AXES = [
+  {left:"M", right:"X", leftLabel:"미니멀", rightLabel:"맥시멀"},
+  {left:"C", right:"T", leftLabel:"클래식", rightLabel:"트렌디"},
+  {left:"F", right:"R", leftLabel:"포멀", rightLabel:"릴랙스드"},
+  {left:"N", right:"V", leftLabel:"뉴트럴", rightLabel:"비비드"},
+];
+
+const TYPES = {
+  MCFN:{name:"타임리스 미니멀리스트", tag:"덜어낼수록 완성되는 사람",
+    desc:"군더더기를 걷어낸 실루엣과 좋은 소재의 힘을 믿는 타입. 유행보다 완성도를 보고, 옷장은 작지만 어떤 조합도 실패하지 않습니다. 당신의 멋은 요란하지 않아서 더 오래 기억됩니다.",
+    traits:["옷 사기 전에 소재 라벨부터 확인함","같은 티셔츠를 색깔별이 아니라 같은 색으로 두 장 삼","보풀 하나 생기면 그 옷에 손이 안 감","쇼핑을 자주 안 하는데 한 번 사면 비쌈","옷장에 옷이 없어 보이는데 정작 코디는 다 됨","유행템을 사도 결국 안 입고 기본템만 돌려 입음","“그 옷 어디 거야?” 질문을 은근히 자주 받음"],
+    brands:[["The Row","정제된 실루엣과 소재주의의 정점"],["Jil Sander","미니멀리즘의 교과서 같은 브랜드"],["COS","일상에서 즐기는 건축적인 미니멀"]],
+    tip:"화이트 셔츠, 울 코트, 미니멀 로퍼 — 기본에 투자할수록 당신다워집니다."},
+  MCFV:{name:"시크 모더니스트", tag:"절제된 룩에 컬러 한 방",
+    desc:"전체는 담백하게, 그러나 한 지점에는 반드시 시선이 머물게 하는 타입. 절제와 대담함의 균형 감각이 탁월해 ‘옷 잘 입는 사람’이라는 말을 자주 듣습니다.",
+    traits:["옷은 무채색인데 가방이나 신발에서 컬러를 터뜨림","포인트 아이템 고르는 데 옷 고르는 시간의 두 배를 씀","립이나 네일까지 코디의 일부라고 생각함","컬러 하나 얹었을 뿐인데 “오늘 힘줬네” 소리 들음","액세서리 트레이가 예쁘게 정리되어 있음","남들이 못 쓰는 색을 겁 없이 씀","전신 거울 셀카를 찍으면 화보 소리 들음"],
+    brands:[["Loewe","조용한 럭셔리에 위트 있는 컬러"],["Ferragamo","클래식 위에 얹는 모던한 색감"],["KUHO 구호","한국적 미니멀에 세련된 컬러 감각"]],
+    tip:"올 뉴트럴 룩에 컬러 백이나 슈즈 하나 — 당신의 공식은 이미 완성형입니다."},
+  MCRN:{name:"에센셜리스트", tag:"기본템의 장인",
+    desc:"좋은 티셔츠, 잘 떨어지는 팬츠, 편안한 스니커즈. 꾸미지 않은 듯한 차림에서 취향이 드러나는 타입입니다. 편안함과 멋이 공존할 수 있다는 것을 증명하는 사람.",
+    traits:["매일 비슷하게 입는데 이상하게 태가 남","회색 티만 다섯 장인데 다 다르다고 주장함 (실제로 다름)","신상보다 단종된 기본템의 재입고를 기다림","옷 개는 방식에 자기만의 규칙이 있음","“편해 보인다”는 말이 최고의 칭찬","쇼핑 리스트에 ‘검정 팬츠’가 영원히 있음","꾸민 날과 안 꾸민 날의 차이를 본인만 앎"],
+    brands:[["Lemaire","힘을 뺀 우아함, 데일리의 품격"],["Auralee","소재로 말하는 조용한 베이식"],["Uniqlo U","누구나 닿을 수 있는 에센셜의 정석"]],
+    tip:"같은 기본템이라도 소재와 핏의 반 끗 차이가 당신의 룩을 완성합니다."},
+  MCRV:{name:"프레피 클린", tag:"단정한데 생기 있는",
+    desc:"깔끔한 실루엣에 밝은 에너지를 더하는 타입. 캠퍼스룩, 카디건, 산뜻한 컬러 포인트가 잘 어울리고, 어디서나 호감형 스타일이라는 이야기를 듣습니다.",
+    traits:["셔츠+니트 조합을 계절별로 보유함","밝은색 옷을 입은 날은 컨디션도 좋아짐","카디건을 어깨에 걸치는 게 하나도 안 어색함","흰 신발을 새것처럼 관리하는 능력이 있음","단정하다는 말 듣는 게 은근히 좋음","부모님이 좋아하는 스타일인데 본인도 좋아함","사진을 찍으면 늘 밝게 나옴"],
+    brands:[["Lacoste","스포티브 클래식의 원조"],["Beanpole 빈폴","단정한 프레피 무드의 정석"],["Polo Ralph Lauren","아메리칸 클래식의 밝은 얼굴"]],
+    tip:"네이비·아이보리 베이스에 그린이나 레드 포인트 — 생기가 곧 당신의 무기."},
+  MTFN:{name:"어반 아키텍트", tag:"도시적인 라인의 완성",
+    desc:"구조적인 실루엣과 절제된 컬러로 도시의 무드를 입는 타입. 트렌드를 알지만 휩쓸리지 않고, 자신만의 각도로 소화합니다. 당신의 룩에는 설계도가 있습니다.",
+    traits:["어깨 라인이 안 맞으면 그 옷을 못 삼","블랙 재킷만 세 벌인데 실루엣이 다 다름","트렌드를 알지만 한 시즌 지켜보고 삼","바지 기장 수선은 필수 코스임","옷걸이도 통일되어 있음","“어디 좋은 데 가?” 소리를 자주 들음","미니멀한데 어딘가 남다른 디테일이 있음"],
+    brands:[["Juun.J 준지","구조적 실루엣의 아방 테일러링"],["LOW CLASSIC 로우클래식","절제된 라인의 서울 컨템포러리"],["Andersson Bell 앤더슨벨","북유럽 감성과 서울 무드의 믹스"]],
+    tip:"어깨 라인이 좋은 재킷 하나가 열 벌의 옷보다 당신을 잘 설명합니다."},
+  MTFV:{name:"갤러리 뮤즈", tag:"미술관이 어울리는 룩",
+    desc:"미니멀한 베이스 위에 예술적인 컬러와 형태를 얹는 타입. 옷을 하나의 오브제처럼 다루며, 전시장에서 작품보다 먼저 눈에 띄곤 합니다.",
+    traits:["옷을 보고 ‘입는 조각 같다’고 생각해 본 적 있음","특이한 실루엣을 보면 일단 입어봐야 직성이 풀림","전시 갈 때 제일 힘줘서 입음","소품 하나도 오브제 기준으로 고름","남들이 “그걸 어떻게 입어?” 하는 옷을 소화함","컬러 조합에 자기만의 이론이 있음","패션이 예술의 영역이라고 진심으로 믿음"],
+    brands:[["Jacquemus","미니멀과 유희 사이의 컬러 감각"],["Courrèges","미래적인 라인과 선명한 무드"],["RECTO 렉토","절제된 실루엣의 컨템포러리 무드"]],
+    tip:"형태가 재미있는 원피스나 톱 하나로 룩 전체를 작품으로 만드세요."},
+  MTRN:{name:"콰이어트 스트리트", tag:"힘 뺀 멋의 정석",
+    desc:"편안한 실루엣, 낮은 채도, 그러나 아는 사람은 아는 디테일. 유행의 중심에 있으면서도 소리 내지 않는 타입입니다. ‘꾸안꾸’의 진짜 의미를 아는 사람.",
+    traits:["꾸민 티 안 나게 꾸미는 데 30분 걸림","랭킹 차트보다 자기만의 루트로 브랜드를 발굴함","신발은 살짝 낡았을 때가 제일 예쁘다고 생각함","로고가 큰 옷은 사지 않음","“그거 어디 거야?” 물으면 아는 사람만 아는 브랜드가 나옴","오버핏인데 후줄근해 보인 적이 없음","‘옷 잘 입는다’보다 ‘분위기 있다’는 말을 더 자주 들음"],
+    brands:[["Our Legacy","힘을 뺀 유럽 스트리트의 무드"],["Acne Studios","미니멀과 스트리트의 교집합"],["POTTERY 포터리","단정한 데일리 웨어의 밀도"]],
+    tip:"실루엣은 넉넉하게, 컬러는 낮게 — 디테일 하나로 차이를 만드세요."},
+  MTRV:{name:"시티 팝", tag:"경쾌한 도시의 컬러",
+    desc:"심플한 옷에 밝은 컬러와 위트를 더해 거리를 산뜻하게 만드는 타입. 무겁지 않은 멋, 보는 사람까지 기분 좋아지는 스타일의 소유자입니다.",
+    traits:["기분이 그날 옷 색깔에 그대로 드러남","양말까지 코디에 포함시킴","옷 덕분에 아이스브레이킹이 됨 (“그 맨투맨 귀엽다!”)","우중충한 날일수록 밝게 입고 나감","캐릭터·그래픽 아이템에 약함","친구들이 “네가 입으니까 예쁘다”고 함","쇼핑이 스트레스 해소법임"],
+    brands:[["Mardi Mercredi 마르디 메크르디","경쾌한 그래픽과 데일리 무드"],["Marithé François Girbaud 마리떼","레트로와 현재를 잇는 캐주얼"],["Covernat 커버낫","부담 없는 시티 캐주얼"]],
+    tip:"무채색 팬츠 위에 컬러 스웻셔츠 — 가볍게 입어도 충분히 빛납니다."},
+  XCFN:{name:"헤리티지 컬렉터", tag:"클래식의 깊이를 아는",
+    desc:"체크, 트위드, 트렌치처럼 시간이 쌓인 아이템을 풍성하게 즐기는 타입. 레이어링에 능하고, 옷마다 이야기가 있습니다. 오래된 것의 가치를 아는 사람.",
+    traits:["트렌치코트 벨트 묶는 법에 철학이 있음","스카프 하나로 룩이 달라진다고 믿음 (실제로 그럼)","좋은 코트는 유산이라고 생각함","계절이 바뀌면 옷장 정리가 하나의 의식임","체크 패턴만 봐도 브랜드를 맞힘","빈티지 마켓에서 눈이 제일 빨리 돌아감","옷마다 산 이유와 스토리를 다 기억함"],
+    brands:[["Burberry","헤리티지 그 자체인 브리티시 클래식"],["Max Mara","시간을 이기는 소재와 실루엣"],["Brooks Brothers","아메리칸 트래디셔널의 원형"]],
+    tip:"트렌치·니트·스카프의 레이어링 — 겹이 쌓일수록 당신의 언어가 됩니다."},
+  XCFV:{name:"올드머니 글램", tag:"화려함도 품격 있게",
+    desc:"화려한 컬러와 장식을 사랑하지만 그 문법은 어디까지나 클래식. 우아함과 존재감을 동시에 갖춘 타입으로, 어느 자리에서든 주인공의 밀도를 냅니다.",
+    traits:["명품은 로고보다 실루엣과 소재로 알아봐주길 바람","골드 액세서리는 과하지 않게, 그러나 반드시","격식 있는 자리에서 제일 빛남","향수까지가 옷차림이라고 생각함","단체 사진 속에서 늘 제일 잘 차려입은 사람임","세일 기간보다 시즌 초에 사는 편","“어디서 그런 옷을 사?”라는 질문을 즐김"],
+    brands:[["Gucci","클래식과 화려함의 대명사"],["Miu Miu","우아함 속의 대담한 장식"],["Dolce&Gabbana","이탈리안 글램의 정수"]],
+    tip:"골드 액세서리와 리치한 소재 — 화려함의 기준을 품질로 세우세요."},
+  XCRN:{name:"보헤미안 드리머", tag:"자연스러운 낭만주의자",
+    desc:"흐르는 실루엣, 자연스러운 소재, 어스 톤의 컬러. 격식보다 무드를 입는 타입입니다. 당신의 스타일에는 여행과 계절의 공기가 담겨 있습니다.",
+    traits:["옷을 고를 때 촉감부터 만져봄","리넨 소재 앞에서 지갑이 열림","여행 가서 산 옷이 옷장의 절반임","자연광 아래에서 제일 예쁜 옷을 알고 있음","액세서리는 실버와 원석 위주","머리를 풀었을 때와 묶었을 때 코디가 달라짐","편한데 어딘가 낭만적이라는 말을 들음"],
+    brands:[["Isabel Marant","파리지앤 보헤미안의 기준"],["Chloé","부드럽고 자유로운 페미닌"],["Free People","자연스러운 레이어드 무드"]],
+    tip:"리넨, 스웨이드, 니트 — 소재의 질감을 겹칠수록 낭만이 짙어집니다."},
+  XCRV:{name:"레트로 러버", tag:"빈티지 감성의 수집가",
+    desc:"과거의 컬러와 패턴에서 보물을 찾아내는 타입. 체크, 플라워, 선명한 원색을 자유롭게 섞으며, 남과 겹치지 않는 스타일을 완성합니다.",
+    traits:["구제샵에서 3시간은 기본임","“요즘엔 이런 거 안 나와”가 입버릇임","엄마 옷장에서 보물을 발견한 적 있음","꽃무늬와 체크에도 시대별 취향이 있음","필름카메라 감성과 옷 취향이 일치함","새 옷도 어딘가 빈티지처럼 입음","남들과 옷이 겹치는 일이 거의 없음"],
+    brands:[["Marimekko","대담한 패턴의 북유럽 클래식"],["Benetton","컬러 블로킹의 원조"],["COMME des GARÇONS PLAY","클래식에 위트를 더한 아이콘"]],
+    tip:"빈티지 숍에서 찾은 한 벌이 당신 룩의 시그니처가 됩니다."},
+  XTFN:{name:"아방가르드", tag:"형태를 실험하는 사람",
+    desc:"블랙을 기반으로 실루엣 자체를 실험하는 타입. 비대칭, 드레이핑, 해체적인 디테일을 즐기며, 옷을 통해 태도를 말합니다. 패션이 곧 철학인 사람.",
+    traits:["옷장을 열면 블랙의 향연인데 본인은 다 다른 블랙이라고 함","좌우 비대칭 디자인에 마음이 흔들림","“그거 어떻게 입는 거야?” 소리를 칭찬으로 들음","옷의 실루엣이 곧 메시지라고 생각함","무난하게 입으면 오히려 어색하다는 말을 들음","디자이너의 철학까지 알고 삼","검은 옷 세탁 분류가 세상에서 제일 어려움"],
+    brands:[["Rick Owens","다크 아방가르드의 제왕"],["Yohji Yamamoto","블랙과 드레이핑의 시인"],["Ann Demeulemeester","시적인 해체주의"]],
+    tip:"컬러 대신 실루엣과 셰이프로 말하세요 — 블랙은 무한한 캔버스입니다."},
+  XTFV:{name:"맥시멀 아이콘", tag:"존재감이 곧 스타일",
+    desc:"과감한 컬러, 강한 실루엣, 최신 트렌드를 두려움 없이 소화하는 타입. 런웨이와 거리의 경계가 없으며, 등장만으로 공간의 분위기를 바꿉니다.",
+    traits:["‘과한가?’ 싶으면 이미 입고 나온 상태임","거울 앞에 제일 오래 서 있는 날이 제일 신나는 날임","사람들의 시선이 부담스럽지 않고 반가움","유행을 따라가는 게 아니라 앞서감","액세서리 서랍이 옷장만큼 큼","무채색만 입으면 어디 아프냐는 소리를 들음","드레스코드 있는 파티가 제일 반가움"],
+    brands:[["Balenciaga","시대의 실루엣을 만드는 브랜드"],["Versace","화려함의 대명사"],["Blumarine","Y2K 글램의 부활"]],
+    tip:"‘과하다’ 싶을 때 하나 더 — 그 한 끗이 당신을 아이콘으로 만듭니다."},
+  XTRN:{name:"스트리트 아카이버", tag:"유틸리티와 스트리트 사이",
+    desc:"워크웨어, 밀리터리, 스트리트의 아카이브를 꿰고 있는 타입. 낡을수록 멋있어지는 옷을 알고, 브랜드의 역사와 맥락까지 입습니다.",
+    traits:["신발 상자를 버리지 못함","옷의 태그와 발매 연도를 기억함","빈티지 워싱의 미세한 차이를 구분함","카고 팬츠 주머니를 실제로 다 씀","브랜드 히스토리를 줄줄 꿰고 있음","새 옷보다 길들여진 옷을 좋아함","친구들의 옷 정보 인간 검색엔진임"],
+    brands:[["Carhartt WIP","워크웨어 스트리트의 표준"],["Stüssy","스트리트 컬처의 원류"],["thisisneverthat 디스이즈네버댓","한국 스트리트의 아카이브"]],
+    tip:"카고 팬츠와 빈티지 워싱 — 시간이 만든 질감이 당신의 포인트입니다."},
+  XTRV:{name:"하이프 세터", tag:"제일 먼저 입는 사람",
+    desc:"새로운 것, 화제가 되는 것, 재미있는 것을 가장 빨리 시도하는 타입. 컬러와 그래픽, 믹스매치에 거침이 없고 주변의 스타일 레이더가 되어 줍니다.",
+    traits:["발매일 알람을 맞춰본 적 있음","친구들이 유행 확인용으로 내 옷차림을 봄","어제 산 옷은 오늘 입어야 직성이 풀림","믹스매치에 실패란 없다고 생각함","옷장 회전율이 주변에서 제일 빠름","SNS 알고리즘이 온통 패션임","“벌써 샀어?”라는 말을 제일 자주 들음"],
+    brands:[["ADER error 아더에러","실험적인 컬러와 유쾌한 해체"],["Supreme","하이프 컬처의 상징"],["KIRSH 키르시","키치한 그래픽과 컬러 팝"]],
+    tip:"오늘의 유행을 즐기되 하나쯤은 당신만의 시그니처로 남기세요."},
+};
+
+/* ================= LOGIC ================= */
+let current = 0;
+let answers = []; // {s:'M', w:1} per question
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.remove('active'); void el.offsetWidth;
+  el.classList.add('active');
+  window.scrollTo({top:0});
+}
+
+function startQuiz(){
+  current = 0; answers = [];
+  renderQuestion();
+  show('quiz');
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  document.getElementById('qcur').textContent = String(current+1).padStart(2,'0');
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('pbar').style.width = (current/QUESTIONS.length*100)+'%';
+  document.getElementById('backBtn').style.visibility = current===0 ? 'hidden':'visible';
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  const marks = ['A','B','C','D'];
+  q.opts.forEach((o,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = '<span class="mark">'+marks[i]+'</span><span>'+o.t+'</span>';
+    btn.onclick = ()=>answer(o);
+    opts.appendChild(btn);
+  });
+  const quiz = document.getElementById('quiz');
+  quiz.classList.remove('active'); void quiz.offsetWidth; quiz.classList.add('active');
+}
+
+function answer(o){
+  answers[current] = {s:o.s, w:o.w};
+  if(current < QUESTIONS.length-1){ current++; renderQuestion(); }
+  else { showResult(); }
+}
+
+function goBack(){
+  if(current>0){ current--; renderQuestion(); }
+}
+
+function computeResult(){
+  const score = {};
+  answers.forEach(a=>score[a.s]=(score[a.s]||0)+a.w);
+  let code = '';
+  const pct = [];
+  AXES.forEach(ax=>{
+    const l = score[ax.left]||0, r = score[ax.right]||0;
+    const winner = l>=r ? ax.left : ax.right;
+    code += winner;
+    pct.push({ax, l, r, total:l+r});
+  });
+  return {code, pct};
+}
+
+function showResult(){
+  const {code, pct} = computeResult();
+  const t = TYPES[code];
+  document.getElementById('rcode').textContent = code;
+  document.getElementById('rname').textContent = t.name;
+  document.getElementById('rtag').textContent = '“'+t.tag+'”';
+  document.getElementById('rdesc').textContent = t.desc;
+
+  const axesEl = document.getElementById('raxes');
+  axesEl.innerHTML = '';
+  pct.forEach(p=>{
+    const lp = Math.round(p.l/p.total*100);
+    const rp = 100-lp;
+    const leftWin = p.l>=p.r;
+    const div = document.createElement('div');
+    div.className='axis';
+    div.innerHTML =
+      '<div class="labels">'+
+        '<span class="'+(leftWin?'on':'')+'">'+p.ax.left+' '+p.ax.leftLabel+' '+lp+'%</span>'+
+        '<span class="'+(!leftWin?'on':'')+'">'+rp+'% '+p.ax.rightLabel+' '+p.ax.right+'</span>'+
+      '</div>'+
+      '<div class="track"><div class="fill" style="'+(leftWin?('left:0;width:'+lp+'%'):('right:0;width:'+rp+'%'))+'"></div></div>';
+    axesEl.appendChild(div);
+  });
+
+  const trEl = document.getElementById('rtraits');
+  trEl.innerHTML = '';
+  t.traits.forEach(tr=>{
+    const div = document.createElement('div');
+    div.className='trait';
+    div.innerHTML = '<span class="check">✓</span><span>'+tr+'</span>';
+    trEl.appendChild(div);
+  });
+
+  const bEl = document.getElementById('rbrands');
+  bEl.innerHTML = '';
+  t.brands.forEach((b,i)=>{
+    const div = document.createElement('div');
+    div.className='brand';
+    div.innerHTML = '<span class="no">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<div><div class="bname">'+b[0]+'</div><div class="breason">'+b[1]+'</div></div>';
+    bEl.appendChild(div);
+  });
+
+  document.getElementById('rtip').innerHTML = '<b>STYLING NOTE</b>'+t.tip;
+  document.getElementById('pbar').style.width = '100%';
+  show('result');
+}
+
+function restart(){
+  current=0; answers=[];
+  show('intro');
+}
+
+function shareResult(){
+  const {code} = computeResult();
+  const t = TYPES[code];
+  const text = '나의 패션 MBTI는 '+code+' — '+t.name+' “'+t.tag+'”';
+  const url = location.href.split('#')[0];
+  if(navigator.share){
+    navigator.share({title:'O.F.F. Inter-View', text, url}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text+'\n'+url).then(()=>{
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'),2000);
+    });
+  }
+}
+</script>
+</body>
+</html>
